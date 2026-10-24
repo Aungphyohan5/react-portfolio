@@ -1,76 +1,87 @@
-import React from 'react';
 
-const styles = {
-  navActiveStyle: {
-    background: 'orange',
-    color: 'white',
-    border: 'none',
-  },
-};
+import React, { useState } from 'react';
+import '../styles/NavTabs.css';
 
-
-
-// Here we are using object destructuring assignment to pluck off our variables from the props object
-// We assign them to their own variable names
 function NavTabs({ currentPage, handlePageChange }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const pages = ['About', 'Portfolio', 'Resume', 'Contact'];
+
+  const navigateTo = (page) => {
+    handlePageChange(page);
+    setMenuOpen(false);
+  };
+
   return (
-    <div className='d-flex justify-content-md-between' style={{ background: '#000000' }}>
-      <div>
-        <h1 style={{ color: 'orange' }}>𝑨𝒖𝒏𝒈</h1>
-      </div>
-      <div>
-        <ul className='nav nav-tabs border-0 d-flex justify-content-end'>
+    <header className="site-header">
+      <nav className="site-nav" aria-label="Main navigation">
+        {/* Brand */}
+        <button
+          type="button"
+          className="site-brand"
+          onClick={() => navigateTo('About')}
+          aria-label="Aung.dev home"
+        >
+          <span className="site-brand-mark" aria-hidden="true">
+            {'</>'}
+          </span>
 
-          <li className="nav-item">
-            <a
-              href="#about"
-              onClick={() => handlePageChange('About')}
-              // Check to see if the currentPage is `About`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={currentPage === 'About' ? 'nav-link active' : 'nav-link'}
-              style={currentPage === 'About' ? styles.navActiveStyle : {}}
-            >
-              About
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="#Portfolio"
-              onClick={() => handlePageChange('Portfolio')}
-              // Check to see if the currentPage is `Portfolio`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={currentPage === 'Portfolio' ? 'nav-link active' : 'nav-link'}
-              style={currentPage === 'Portfolio' ? styles.navActiveStyle : {}}
-            >
-              Portfolio
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="#contact"
-              onClick={() => handlePageChange('Contact')}
-              // Check to see if the currentPage is `Contact`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={currentPage === 'Contact' ? 'nav-link active' : 'nav-link'}
-              style={currentPage === 'Contact' ? styles.navActiveStyle : {}}
-            >
-              Contact
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              href="#Resume"
-              onClick={() => handlePageChange('Resume')}
-              // Check to see if the currentPage is `Resume`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={currentPage === 'Resume' ? 'nav-link active' : 'nav-link'}
-              style={currentPage === 'Resume' ? styles.navActiveStyle : {}}
-            >
-              Resume
-            </a>
-          </li>
-        </ul>
-      </div>
+          <span>
+            Aung<span className="site-brand-dot">.dev</span>
+          </span>
+        </button>
 
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          className="site-menu-toggle"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label={
+            menuOpen ? 'Close navigation menu' : 'Open navigation menu'
+          }
+          aria-expanded={menuOpen}
+          aria-controls="site-primary-navigation"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
 
-    </div>
+        {/* Navigation links */}
+        <div
+          id="site-primary-navigation"
+          className={`site-nav-links ${menuOpen ? 'site-nav-links-open' : ''
+            }`}
+        >
+          {pages.map((page) => {
+            const isActive = currentPage === page;
 
+            return (
+              <button
+                key={page}
+                type="button"
+                className={`site-nav-link ${isActive ? 'site-nav-link-active' : ''
+                  }`}
+                onClick={() => navigateTo(page)}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {page}
+              </button>
+            );
+          })}
+
+          {/* Call to action */}
+          <button
+            type="button"
+            className="site-nav-cta"
+            onClick={() => navigateTo('Contact')}
+          >
+            Let's talk
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </nav>
+    </header>
   );
 }
 

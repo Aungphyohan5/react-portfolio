@@ -1,120 +1,244 @@
-// importing necessary dependencies
+
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-// importing style for contact page
 import '../../styles/Contact.css';
 
 export default function Contact() {
-  // create a reference using useRef hook
-  const form = useRef();
-  // to get input data from contact form using useState
+  const form = useRef(null);
+
   const [values, setValues] = useState({
     name: '',
     email: '',
     message: '',
   });
+
   const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+
+    setValues((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+
+    setErrors((previous) => ({
+      ...previous,
+      [name]: '',
+    }));
+
+    if (status) setStatus('');
   };
 
   const validateForm = () => {
-    let errors = {};
-    if (!values.name) {
-      errors.name = 'Name is required';
+    const nextErrors = {};
+
+    if (!values.name.trim()) {
+      nextErrors.name = 'Please enter your name.';
     }
-    if (!values.email) {
-      errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-      errors.email = 'Email is invalid';
+
+    if (!values.email.trim()) {
+      nextErrors.email = 'Please enter your email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
+      nextErrors.email = 'Please enter a valid email address.';
     }
-    if (!values.message) {
-      errors.message = 'Message is required';
+
+    if (!values.message.trim()) {
+      nextErrors.message = 'Please enter a message.';
+    } else if (values.message.trim().length < 10) {
+      nextErrors.message = 'Please enter at least 10 characters.';
     }
-    setErrors(errors);
-    // check error is zero, if zero, return true 
-    return Object.keys(errors).length === 0;
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
   };
 
-  // used emailjs template to receive the message directly to my email
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validateForm()) {
-      emailjs
-        .sendForm(
-          'service_zezn407',
-          'template_qo7g4m8',
-          form.current,
-          't-dfFqeX4KEVQG46U'
-        )
-        .then(
-          (result) => {
-            console.log(result.text);
-          },
-          (error) => {
-            console.log(error.text);
-          }
-        );
+    setStatus('');
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      await emailjs.sendForm(
+        'service_zezn407',
+        'template_qo7g4m8',
+        form.current,
+        't-dfFqeX4KEVQG46U'
+      );
+
+      setStatus('success');
+      setValues({
+        name: '',
+        email: '',
+        message: '',
+      });
+      setErrors({});
+      form.current?.reset();
+    } catch (error) {
+      console.error('EmailJS submission failed:', error);
+      setStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="contact-bg vh-100 text-white">
-      <form
-        ref={form}
-        onSubmit={handleSubmit}
-        className="mx-auto col-10 col-md-8 col-lg-6 form-container"
-      >
-        <h1>Contact</h1>
-        <div className="form-group mt-4">
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-            value={values.name}
-            onChange={handleChange}
-          />
-          {/* to display the error msg if there is no input */}
-          {/* invalid-feedback is from bootstrap and used to show err msg */}
-          {errors.name && (
-            <div className="invalid-feedback">{errors.name}</div>
-          )}
-        </div>
+    <main className="contact-page">
+      <div className="contact-container">
+        <header className="contact-heading">
+          <p className="contact-eyebrow">GET IN TOUCH</p>
+          <h1>
+            Let's talk about
+            <br />
+            <span>your next project.</span>
+          </h1>
+          <p className="contact-intro">
+            Have a website idea, need help with a web application, or want
+            to discuss a project? Send me a message using the form below.
+          </p>
+        </header>
 
-        <div className="form-group mt-4">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-            value={values.email}
-            onChange={handleChange}
-          />
-          {errors.email && (
-            <div className="invalid-feedback">{errors.email}</div>
-          )}
-        </div>
+        <div className="contact-layout">
+          <aside className="contact-info">
+            <p className="contact-eyebrow">LET'S CONNECT</p>
+            <h2>Tell me what you're building.</h2>
+            <p>
+              Share a little about your goals, what you need help with, and
+              what you'd like your website or application to do.
+            </p>
 
-        <div className="form-group mt-4">
-          <label>Message</label>
-          <textarea
-            name="message"
-            className={`form-control textbox-height ${errors.message ? 'is-invalid' : ''
-              }`}
-            value={values.message}
-            onChange={handleChange}
-          />
-          {errors.message && (
-            <div className="invalid-feedback">{errors.message}</div>
-          )}
+            <div className="contact-info-divider" />
+
+            <div className="contact-detail">
+              <span className="contact-detail-icon" aria-hidden="true">
+                ↗
+              </span>
+              <div>
+                <h3>Project inquiries</h3>
+                <p>Use the form to send your message directly.</p>
+              </div>
+            </div>
+
+            <div className="contact-detail">
+              <span className="contact-detail-icon" aria-hidden="true">
+                {'</>'}
+              </span>
+              <div>
+                <h3>Web development</h3>
+                <p>Websites, interfaces, and full-stack applications.</p>
+              </div>
+            </div>
+
+            <div className="contact-note">
+              <span className="contact-note-dot" />
+              I look forward to hearing about your project.
+            </div>
+          </aside>
+
+          <section className="contact-form-card">
+            <div className="contact-form-heading">
+              <h2>Send a message</h2>
+              <p>Fields marked with * are required.</p>
+            </div>
+
+            <form ref={form} onSubmit={handleSubmit} noValidate>
+              <div className="contact-field">
+                <label htmlFor="contact-name">Your name *</label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  name="name"
+                  placeholder="Jane Smith"
+                  autoComplete="name"
+                  value={values.name}
+                  onChange={handleChange}
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? 'contact-name-error' : undefined}
+                  required
+                />
+                {errors.name && (
+                  <p className="contact-error" id="contact-name-error">
+                    {errors.name}
+                  </p>
+                )}
+              </div>
+
+              <div className="contact-field">
+                <label htmlFor="contact-email">Email address *</label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  placeholder="jane@example.com"
+                  autoComplete="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? 'contact-email-error' : undefined}
+                  required
+                />
+                {errors.email && (
+                  <p className="contact-error" id="contact-email-error">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+
+              <div className="contact-field">
+                <label htmlFor="contact-message">Your message *</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  placeholder="Tell me a little about your project..."
+                  rows="6"
+                  value={values.message}
+                  onChange={handleChange}
+                  aria-invalid={Boolean(errors.message)}
+                  aria-describedby={
+                    errors.message ? 'contact-message-error' : undefined
+                  }
+                  required
+                />
+                {errors.message && (
+                  <p className="contact-error" id="contact-message-error">
+                    {errors.message}
+                  </p>
+                )}
+              </div>
+
+              {status === 'success' && (
+                <p className="contact-status contact-status-success" role="status">
+                  Your message was sent successfully. Thank you for reaching out!
+                </p>
+              )}
+
+              {status === 'error' && (
+                <p className="contact-status contact-status-error" role="alert">
+                  Sorry, your message could not be sent. Please try again later.
+                </p>
+              )}
+
+              <button
+                type="submit"
+                className="contact-submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending message...' : 'Send message'}
+                {!isSubmitting && <span aria-hidden="true">↗</span>}
+              </button>
+
+              <p className="contact-form-footnote">
+                Your information will be used to respond to your inquiry.
+              </p>
+            </form>
+          </section>
         </div>
-        <input type="submit" value="Send" className="btn btn-warning mt-4" />
-      </form>
-    </div>
+      </div>
+    </main>
   );
 }

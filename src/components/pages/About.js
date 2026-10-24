@@ -1,129 +1,248 @@
+
 import React from 'react';
 import { FaGithub, FaLinkedin, FaStackOverflow } from 'react-icons/fa';
-import Card from 'react-bootstrap/Card'; //react-bootstrap
-import CardGroup from 'react-bootstrap/CardGroup'; //react-bootstrap
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import '../../styles/About.css';
 
+const technologies = [
+  {
+    name: 'React',
+    category: 'Frontend',
+    description: 'Reusable components and interactive user interfaces.',
+    icon: '⚛',
+  },
+  {
+    name: 'Node.js',
+    category: 'Backend',
+    description: 'JavaScript runtime for server-side applications.',
+    icon: '⬡',
+  },
+  {
+    name: 'Express.js',
+    category: 'Backend',
+    description: 'Server routes, middleware, and REST APIs.',
+    icon: '⌘',
+  },
+  {
+    name: 'MongoDB',
+    category: 'Database',
+    description: 'Document-based data storage for web applications.',
+    icon: '◈',
+  },
+  {
+    name: 'jQuery',
+    category: 'JavaScript',
+    description: 'DOM manipulation and event-driven interactions.',
+    icon: '⟨/⟩',
+  },
+  {
+    name: 'MySQL',
+    category: 'Database',
+    description: 'Relational data modeling and SQL queries.',
+    icon: '▤',
+  },
+];
 
+const services = [
+  {
+    number: '01',
+    title: 'Responsive websites',
+    description:
+      'Modern, mobile-friendly interfaces that work across screen sizes.',
+  },
+  {
+    number: '02',
+    title: 'Full-stack development',
+    description:
+      'Frontend interfaces connected to backend logic and databases.',
+  },
+  {
+    number: '03',
+    title: 'API integration',
+    description:
+      'Connect web applications with APIs and external services.',
+  },
+];
 
-
-
-export default function About() {
+export default function About({ onNavigate }) {
   return (
-    <div>
-      <div className='d-flex text-white bgImage hide'>
-        <div className='container-sm customWidth' style={{ paddingLeft: '40px' }}>
-          <h1 className='mb-4'><span style={{ color: '#F2921D ' }}>Hi,</span> I am Aung Phyo Han</h1>
-          <h2 style={{ color: '#159895' }}> Full Stack Developer</h2>
-          <a href='https://github.com/Aungphyohan5'><FaGithub size={30} color="#F2CD5C" className='m-2' /></a>
-          <a href='https://www.linkedin.com/feed/'><FaLinkedin size={30} color="#F2CD5C" className='m-2' /></a>
-          <a href='https://stackoverflow.com/'><FaStackOverflow size={30} color="#F2CD5C" className='m-2' /></a>
+    <main className="about-page">
+      <section className="hero-section">
+        <div className="hero-glow" />
 
+        <div className="about-container hero-grid">
+          <div className="hero-content">
+            <div className="availability-label">
+              <span className="availability-dot" />
+              FULL-STACK WEB DEVELOPER
+            </div>
 
+            <h1 className="hero-title">
+              Building digital
+              <br />
+              experiences that
+              <br />
+              <span>work beautifully.</span>
+            </h1>
 
+            <p className="hero-description">
+              Hi, I'm <strong>Aung Phyo Han</strong>. I build responsive
+              websites and web applications with thoughtful interfaces
+              and reliable functionality.
+            </p>
 
+            <div className="hero-actions">
+              <a className="button-primary" href="#skills">
+                Explore my skills <span>↘</span>
+              </a>
+
+              <a
+                className="button-secondary"
+                href="https://github.com/Aungphyohan5"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <FaGithub /> GitHub
+              </a>
+            </div>
+
+            <div className="social-links" aria-label="Social profiles">
+              <a
+                href="https://github.com/Aungphyohan5"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+              >
+                <FaGithub />
+              </a>
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin />
+              </a>
+              <a
+                href="https://stackoverflow.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Stack Overflow"
+              >
+                <FaStackOverflow />
+              </a>
+            </div>
+          </div>
+
+          <div className="hero-visual" aria-label="Developer code illustration">
+            <div className="code-window">
+              <div className="code-window-header">
+                <div className="window-dots">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <span>developer.js</span>
+                <span className="window-status">● online</span>
+              </div>
+
+              <div className="code-content">
+                <div><span className="code-muted">01</span> <span className="code-purple">const</span> developer = {'{'}</div>
+                <div><span className="code-muted">02</span> &nbsp; name: <span className="code-green">'Aung'</span>,</div>
+                <div><span className="code-muted">03</span> &nbsp; role: <span className="code-green">'Full-stack developer'</span>,</div>
+                <div><span className="code-muted">04</span> &nbsp; focused: [</div>
+                <div><span className="code-muted">05</span> &nbsp;&nbsp; <span className="code-yellow">'Clean UI'</span>,</div>
+                <div><span className="code-muted">06</span> &nbsp;&nbsp; <span className="code-yellow">'Useful products'</span>,</div>
+                <div><span className="code-muted">07</span> &nbsp;&nbsp; <span className="code-yellow">'Quality code'</span></div>
+                <div><span className="code-muted">08</span> &nbsp; ],</div>
+                <div><span className="code-muted">09</span> &nbsp; learning: <span className="code-purple">true</span></div>
+                <div><span className="code-muted">10</span> {'};'}</div>
+              </div>
+
+              <div className="code-window-footer">
+                <span>⌘ JavaScript</span>
+                <span>Made with care</span>
+              </div>
+            </div>
+
+            <div className="floating-tag floating-tag-top">
+              <span>✳</span> Thoughtful design
+            </div>
+            <div className="floating-tag floating-tag-bottom">
+              <span>↗</span> Built for the web
+            </div>
+          </div>
         </div>
-        <div className='container-sm customWidth lead small-device' style={{ width: '600px', paddingRight: '100px' }}>
-          <h2 className='mb-4 font-weight-bold' style={{ color: '#F2921D ' }}>About me</h2>
-          <p>
-            I have found my passion in web development. Currently, I am attending a web-development Bootcamp from the University of New Brunswick. I love spending time coding and encountering new challenges.
-          </p>
+
+        <div className="hero-bottom-border" />
+      </section>
+
+      <section className="content-section" id="skills">
+        <div className="about-container">
+          <div className="section-heading">
+            <p className="section-eyebrow">MY TOOLKIT</p>
+            <h2>Tools I use to build</h2>
+            <p className="section-description">
+              A practical set of technologies for building and connecting
+              modern web applications.
+            </p>
+          </div>
+
+          <div className="technology-grid">
+            {technologies.map((technology) => (
+              <article className="technology-card" key={technology.name}>
+                <div className="technology-icon" aria-hidden="true">
+                  {technology.icon}
+                </div>
+                <div className="technology-category">
+                  {technology.category}
+                </div>
+                <h3>{technology.name}</h3>
+                <p>{technology.description}</p>
+              </article>
+            ))}
+          </div>
         </div>
+      </section>
 
-      </div>
-      <div className='cardBg'>
-        <div >
-          <h2 className='text-center pb-5' style={{ color: '#F2921D ' }}>What I Am Great At</h2>
+      <section className="content-section services-section">
+        <div className="about-container">
+          <div className="section-heading">
+            <p className="section-eyebrow">HOW I CAN HELP</p>
+            <h2>Let's build something useful.</h2>
+            <p className="section-description">
+              From polished interfaces to connected web applications,
+              I focus on building solutions around your project needs.
+            </p>
+          </div>
+
+          <div className="services-grid">
+            {services.map((service) => (
+              <article className="service-card" key={service.number}>
+                <span className="service-number">{service.number}</span>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+                <span className="service-arrow" aria-hidden="true">↗</span>
+              </article>
+            ))}
+          </div>
+
+          <div className="closing-cta">
+            <div>
+              <p className="section-eyebrow">HAVE A PROJECT IN MIND?</p>
+              <h2>Let's make it happen.</h2>
+              <p>Tell me what you're building and what you need help with.</p>
+            </div>
+
+            <button
+              type="button"
+              className="button-primary"
+              onClick={() => onNavigate?.('Contact')}
+            >
+              Get in touch <span>↗</span>
+            </button>
+          </div>
         </div>
-        <Container>
-          <CardGroup className='mb-5'>
-            <Col>
-              <Card>
-                <Card.Img variant="top" src="https://user-images.githubusercontent.com/112873819/227736189-9bfad932-5027-482c-82c6-a10175082629.svg" />
-                <Card.Body>
-                  <Card.Title>Node Js</Card.Title>
-                  <Card.Text>
-                    Node.js is a popular open-source runtime environment built on the Chrome V8 JavaScript engine. It allows developers to run JavaScript on the server-side and build scalable, high-performance applications.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>
-              <Card>
-                <Card.Img variant="top" src="https://user-images.githubusercontent.com/112873819/227736221-08f23783-6a50-487d-8375-bac6db538404.png" />
-                <Card.Body>
-                  <Card.Title>React</Card.Title>
-                  <Card.Text>
-                    React is a popular JavaScript library used for building user interfaces. It was developed by Facebook and allows developers to create reusable UI components that can be used to build complex web applications.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>
-              <Card>
-                <Card.Img variant="top" src="https://user-images.githubusercontent.com/112873819/227736243-59469e7a-bcf2-45e9-ae31-0858c23216fb.png" />
-                <Card.Body>
-                  <Card.Title>Express Js</Card.Title>
-                  <Card.Text>
-                    Express.js is a popular open-source web application framework for Node.js. It provides a robust set of features for building web applications and APIs, including routing, middleware support, and template engines.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </CardGroup>
-
-          <CardGroup>
-            <Col>
-              <Card>
-                <Card.Img variant="top" src="https://user-images.githubusercontent.com/112873819/227736247-3d6c4412-abc3-4228-a11e-bf9cc6a7b91a.png" />
-                <Card.Body>
-                  <Card.Title>MongoDB</Card.Title>
-                  <Card.Text>
-                    MongoDB is a popular open-source document-oriented database that stores data in flexible, JSON-like documents. It is designed to be scalable and high-performance, and is often used for web and mobile applications, content management systems, and other data-driven projects.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>
-              <Card>
-                <Card.Img variant="top" src="https://user-images.githubusercontent.com/112873819/227736252-427f1f86-76a1-42c3-82c4-2540f4869b69.png" />
-                <Card.Body>
-                  <Card.Title>JQuery</Card.Title>
-                  <Card.Text>
-                    JQuery is a popular open-source JavaScript library used for simplifying HTML document traversal and manipulation, as well as event handling, animation, and Ajax interactions. It is designed to make it easier for developers to write JavaScript code that works across multiple browsers.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col>
-              <Card className='mb-0'>
-                <Card.Img variant="top" src="https://user-images.githubusercontent.com/112873819/227736255-802f1945-f30a-4291-b606-50ed677c47b1.png" />
-                <Card.Body>
-                  <Card.Title>MySQL</Card.Title>
-                  <Card.Text>
-                    MySQL is a popular open-source relational database management system that uses SQL for querying and managing data. It is known for its stability, reliability, and scalability, and is commonly used for web applications, content management systems, and other data-driven projects.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </CardGroup>
-        </Container>
-
-
-
-
-
-
-      </div >
-
-    </div>
-
-
-
-
-
-
+      </section>
+    </main>
   );
 }
