@@ -31,11 +31,11 @@ A personal portfolio website built with **React** to showcase my skills, project
 - **Live Portfolio:** [View Aung.dev](https://aungphyohan5.github.io/react-portfolio/)
 - **GitHub Repository:** [View Source Code](https://github.com/Aungphyohan5/react-portfolio)
 
+
 ## Screenshots
 
-<!-- Replace this URL with a screenshot of your latest portfolio design. -->
+![Aung.dev Portfolio](./screenshots/portfolio-home.png)
 
-![React Portfolio Screenshot](https://user-images.githubusercontent.com/112873819/228398495-3fe946aa-0e9c-4b0e-af01-6b2cca0d9c2c.png)
 
 ## Usage
 
